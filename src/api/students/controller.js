@@ -5,7 +5,7 @@ export const create = (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(result);
+      sendAllStudents(res);
     }
   })
 }
@@ -20,20 +20,25 @@ export const show = (req, res) =>
   })
 
 export const index = (req, res) =>
-  Students.find({}, (err, students) => {
+  sendAllStudents(res);
+
+export const searchStudent = (req, res) => {
+  console.log(req.query);
+  Students.find({ name: { '$regex' : req.query.string, '$options' : 'i' }}).exec((err, results) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(students);
+      res.send(results);
     }
   })
+}
 
 export const update = (req, res) => {
   Students.findByIdAndUpdate(req.params.id, req.body, { new: true}, (err, updatedObj) => {
     if (err) {
       res.send(err);
     } else {
-      res.send(updatedObj);
+      sendAllStudents(res);
     }
   })
 }
@@ -44,6 +49,16 @@ export const destroy = (req, res) =>
       res.send(err);
     }
     else {
-      res.send(deletedObj);
+      sendAllStudents(res);
     }
   }); 
+
+  const sendAllStudents = (res) => {
+    Students.find((er, students) => {
+      if (!er) {
+        res.send(students);
+      } else {
+        res.send(er);
+      }
+    })
+  }
