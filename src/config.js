@@ -40,7 +40,7 @@ const config = {
     mongo: {
       uri: "mongo://localhost:27017",
       options: {
-        debug: false
+        debug: true
       }
     }
   }
