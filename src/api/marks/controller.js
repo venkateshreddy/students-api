@@ -1,6 +1,7 @@
 import Marks from './model';
 import Students from '../students/model';
 import Subjects from '../subjects/model';
+import MarksViews from './marksViewModel';
 
 export const create = (req, res) => {
   Marks.create(req.body, (err, result) => {
@@ -85,3 +86,15 @@ export const destroy = (req, res) =>
       res.send(deletedObj);
     }
   }); 
+
+export const marksDetails = (req, res) => 
+MarksViews.find({}, (err, results) => {
+  if (err) {
+    res.send(err);
+  } else {
+    const formattedResults = results.map(record => {
+      return record.view();
+    });
+    res.send(formattedResults);
+  }
+})
