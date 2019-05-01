@@ -1,5 +1,4 @@
 import Marks from './model';
-
 import Students from '../students/model';
 import Subjects from '../subjects/model';
 import MarksViews from './marksViewModel';
