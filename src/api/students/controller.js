@@ -1,5 +1,4 @@
 import Students from './model';
-
 export const create = (req, res) => {
   Students.create(req.body, (err, result) => {
     if (err) {
